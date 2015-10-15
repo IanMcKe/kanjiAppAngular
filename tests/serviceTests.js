@@ -1,4 +1,4 @@
-describe('UtilitiesFactory test', function() {
+describe('UtilitiesFactory tests', function() {
   beforeEach(module('kanjiApp'));
 
   var UtilitiesFactory;
@@ -19,5 +19,33 @@ describe('UtilitiesFactory test', function() {
     expect(question.answer).toBe("背");
     expect(question.afterAns).toBe("の高い女の人は誰ですか。")
     expect(question.level).toBe("N5");
+  });
+});
+
+describe('QuestionsFactory tests', function() {
+  beforeEach(module('kanjiApp'));
+
+  var QuestionsFactory;
+
+  beforeEach(inject(function(_QuestionsFactory_) {
+    QuestionsFactory = _QuestionsFactory_;
+  }));
+
+  it('has a .addQuestion() method', function() {
+    expect(angular.isFunction(QuestionsFactory.addQuestion)).toBe(true);
+  });
+
+  it('adds a question using the .addQuestion() method', function() {
+    QuestionsFactory.questionBefore = "あの";
+    QuestionsFactory.questionAnswer = "背";
+    QuestionsFactory.questionAfter = "の高い女の人は誰ですか。";
+    QuestionsFactory.questionLevel = "N5";
+    QuestionsFactory.addQuestion();
+
+    expect(QuestionsFactory.questions[0].beforeAns).toBe("あの");
+    expect(QuestionsFactory.questions[0].answer).toBe("背");
+    expect(QuestionsFactory.questions[0].afterAns).toBe("の高い女の人は誰ですか。");
+    expect(QuestionsFactory.questions[0].level).toBe("N5");
+    expect(QuestionsFactory.questions[0].id).toBe(1);
   });
 });
